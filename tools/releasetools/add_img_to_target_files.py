@@ -448,6 +448,11 @@ def CreateImage(input_dir, info_dict, what, output_file, block_list=None):
   hash_seed = "hash_seed-" + uuid_seed
   image_props["hash_seed"] = str(uuid.uuid5(uuid.NAMESPACE_URL, hash_seed))
 
+  # For whatever reason this fixes the camera on RMX3461
+  if what == "odm" and uuid_seed.find("RMX3461") != -1:
+    image_props["uuid"] = "6313632b-b134-4801-9e64-ea758269aa71"
+    image_props["hash_seed"] = "0bbeb9ea-5fa0-45a4-acba-b12295f3b8e4"
+
   build_image.BuildImage(
       os.path.join(input_dir, what.upper()), image_props, output_file.name)
 
